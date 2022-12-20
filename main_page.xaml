@@ -712,7 +712,7 @@
                 <TextBox Name="n3" Text="{Binding Row3, Mode = TwoWay, UpdateSourceTrigger=PropertyChanged}" PreviewKeyDown="OnKeyDownHandler" TextChanged ="OnTextboxChangedHandler" Grid.Row="3"  FontFamily="Courier New" FontSize="24"  VerticalContentAlignment="Center"/>
             </Grid>
             
-            <!-- Symbols section-->
+            <!-- Symbols section: to be updated-->
             <Grid Height="60" Background="white">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>

@@ -179,6 +179,7 @@ namespace ukulele_tab
         /// </summary>
         private void OnKeyDownHandler(object sender, KeyEventArgs key_e)
         {
+            //need fix: cursor update
             CursorIndex = ((TextBox)sender).CaretIndex;
             if (key_e.Key == Key.Left)
             {
