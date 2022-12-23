@@ -121,12 +121,17 @@ namespace ukulele_tab
             //add new note to tab object
             NewTabFile.AddNote(str_pos, fret_pos, CursorIndex);
             ++CursorIndex;
+            //if the note is at fret pos 10 or greater, increase cursor idx again bc tab array stores char (each digit) not string
+            if(fret_pos.Length > 1)
+            {
+                ++CursorIndex;
+            }
             NewTabFile.AddSeparatorToTheRight(str_pos, CursorIndex);
             ++CursorIndex;
             //update textbox based on new tab array
             UpdateTxtbox();
         }
-
+  
         private void PromptForFilename(object sender, EventArgs e)
         {
             //show modal dialog box for user to enter filename
@@ -164,7 +169,7 @@ namespace ukulele_tab
         private void UpdateTxtbox()
         {
             //get list representation of tab
-            List<string>[] tab = NewTabFile.GetTab();
+            List<char>[] tab = NewTabFile.GetTab();
             
             //update the textboxes
             Txtbox.Row0 = string.Join("", tab[0]);
@@ -174,12 +179,16 @@ namespace ukulele_tab
             
         }
         
+
+        private void OnMouseUpTxtboxHandler(object sender, EventArgs e)
+        {
+            CursorIndex = ((TextBox)sender).CaretIndex;
+        }
         /// <summary>
         /// Handle key events in text box
         /// </summary>
         private void OnKeyDownHandler(object sender, KeyEventArgs key_e)
         {
-            //need fix: cursor update
             CursorIndex = ((TextBox)sender).CaretIndex;
             if (key_e.Key == Key.Left)
             {
@@ -202,56 +211,13 @@ namespace ukulele_tab
                 UpdateTxtbox();
                 key_e.Handled = true;
                 return;
-            }
-                    
-            if(key_e.Key == Key.Back)
-            {
-                --CursorIndex;
-                ///get the string position based on the textbox being typed in
-                //format: "n{str_pos}"
-                int str_pos = (int)Char.GetNumericValue(((TextBox)sender).Name[1]);
-
-                //delete note based on that index and string position/textbox
-                //NewTabFile.DeleteNote(false, CursorIndex, str_pos);
-                string text;
-                if (str_pos == 0)
-                {
-                    Txtbox.Row0 = ((TextBox)sender).Text;
-                    text = Txtbox.Row0;
-                }
-                else if (str_pos == 1)
-                {
-                    Txtbox.Row1 = ((TextBox)sender).Text;
-                    text = Txtbox.Row1;
-                }
-                else if (str_pos == 2)
-                {
-                    Txtbox.Row2 = ((TextBox)sender).Text;
-                    text = Txtbox.Row2;
-                }
-                else
-                {
-                    Txtbox.Row3 = ((TextBox)sender).Text;
-                    text = Txtbox.Row3;
-                }
-                NewTabFile.UpdateTabByStringOfRow(str_pos, text);
-                
-                return;
-            }
-                   
-            //Alt+Backspace
-            if ((Keyboard.Modifiers & ModifierKeys.Alt) == ModifierKeys.Alt) // Is Alt key pressed? from StackOverflow as source
-            {
-                if (key_e.Key == Key.Back)
-                {
-                    //delete elements in column at that index
-                    NewTabFile.DeleteNote(true, CursorIndex);
-                    UpdateTxtbox();
-                    return;
-                }
-            }
+            } 
         }
         
+        /// <summary>
+        /// If there are any changes in the textboxes, the binded event will be triggered to update the ukulele tab.
+        /// The event is useful for: deleting/adding notes/symbols in textbox using keyboard.
+        /// </summary>
         private void OnTextboxChangedHandler(object sender, TextChangedEventArgs args)
         {
             //get the string position based on the textbox being typed in
