@@ -706,20 +706,83 @@
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
-                <TextBox Name="n0" Text="{Binding Row0, Mode = TwoWay, UpdateSourceTrigger=PropertyChanged}" PreviewKeyDown="OnKeyDownHandler" TextChanged ="OnTextboxChangedHandler" Grid.Row="0" FontFamily="Courier New" FontSize="24" VerticalContentAlignment="Center"/>
-                <TextBox Name="n1" Text="{Binding Row1, Mode = TwoWay, UpdateSourceTrigger=PropertyChanged}" PreviewKeyDown="OnKeyDownHandler" TextChanged ="OnTextboxChangedHandler" Grid.Row="1"  FontFamily="Courier New" FontSize="24" VerticalContentAlignment="Center"/>
-                <TextBox Name="n2" Text="{Binding Row2, Mode = TwoWay, UpdateSourceTrigger=PropertyChanged}" PreviewKeyDown="OnKeyDownHandler" TextChanged ="OnTextboxChangedHandler" Grid.Row="2"  FontFamily="Courier New" FontSize="24" VerticalContentAlignment="Center"/>
-                <TextBox Name="n3" Text="{Binding Row3, Mode = TwoWay, UpdateSourceTrigger=PropertyChanged}" PreviewKeyDown="OnKeyDownHandler" TextChanged ="OnTextboxChangedHandler" Grid.Row="3"  FontFamily="Courier New" FontSize="24"  VerticalContentAlignment="Center"/>
+                <TextBox Name="n0" Text="{Binding Row0, Mode = TwoWay, UpdateSourceTrigger=PropertyChanged}" PreviewMouseLeftButtonUp="OnMouseUpTxtboxHandler" PreviewKeyDown="OnKeyDownHandler" TextChanged ="OnTextboxChangedHandler" Grid.Row="0" FontFamily="Courier New" FontSize="24" VerticalContentAlignment="Center"/>
+                <TextBox Name="n1" Text="{Binding Row1, Mode = TwoWay, UpdateSourceTrigger=PropertyChanged}" PreviewMouseLeftButtonUp="OnMouseUpTxtboxHandler" PreviewKeyDown="OnKeyDownHandler" TextChanged ="OnTextboxChangedHandler" Grid.Row="1"  FontFamily="Courier New" FontSize="24" VerticalContentAlignment="Center"/>
+                <TextBox Name="n2" Text="{Binding Row2, Mode = TwoWay, UpdateSourceTrigger=PropertyChanged}" PreviewMouseLeftButtonUp="OnMouseUpTxtboxHandler" PreviewKeyDown="OnKeyDownHandler" TextChanged ="OnTextboxChangedHandler" Grid.Row="2"  FontFamily="Courier New" FontSize="24" VerticalContentAlignment="Center"/>
+                <TextBox Name="n3" Text="{Binding Row3, Mode = TwoWay, UpdateSourceTrigger=PropertyChanged}" PreviewMouseLeftButtonUp="OnMouseUpTxtboxHandler" PreviewKeyDown="OnKeyDownHandler" TextChanged ="OnTextboxChangedHandler" Grid.Row="3"  FontFamily="Courier New" FontSize="24"  VerticalContentAlignment="Center"/>
             </Grid>
             
             <!-- Symbols section: to be updated-->
-            <Grid Height="60" Background="white">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
-                </Grid.ColumnDefinitions>
-            </Grid>
+            <DockPanel Height="60" Background="white">
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Height="60">
+                    <StackPanel.Background>
+                        <ImageBrush ImageSource="/62241ec53618f.png"/>
+                    </StackPanel.Background>
+                    <Label Name="h" Content="h hammer on" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="90" Height="40" Background="#FFE6BABA" Margin="20, 0">
+                        <Label.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </Label.Resources>
+                    </Label>
+                    <Label Name="p" Content="p pull off" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="90" Height="40" Background="#FFE6BABA" Margin="20, 0">
+                        <Label.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </Label.Resources>
+                    </Label>
+                    <Label Name="b" Content="b bend" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="90" Height="40" Background="#FFE6BABA" Margin="20, 0">
+                        <Label.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </Label.Resources>
+                    </Label>
+                    <Label Name="up" Content="/ slide up" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="90" Height="40" Background="#FFE6BABA" Margin="20, 0">
+                        <Label.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </Label.Resources>
+                    </Label>
+                    <Label Name="down" Content="\ slide down" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="100" Height="40" Background="#FFE6BABA" Margin="20, 0">
+                        <Label.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </Label.Resources>
+                    </Label>
+                    <Label Name="vibrato" Content="~ vibrato" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="90" Height="40" Background="#FFE6BABA" Margin="20, 0">
+                        <Label.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </Label.Resources>
+                    </Label>
+                    <Label Name="x" Content="x muted hit" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="90" Height="40" Background="#FFE6BABA" Margin="20, 0">
+                        <Label.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </Label.Resources>
+                    </Label>
+                    <Label Name="ghost" Content="() ghost note" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="110" Height="40" Background="#FFE6BABA" Margin="20, 0">
+                        <Label.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </Label.Resources>
+                    </Label>
+                    <Label Name="harmonic" Content="&lt;&gt; harmonics" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="90" Height="40" Background="#FFE6BABA" Margin="20, 0">
+                        <Label.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </Label.Resources>
+                    </Label>
+                </StackPanel>
+            </DockPanel>
 
             <!-- Leave 40px below the dockpanel in order to fit the MainWindow? -->
         </DockPanel>

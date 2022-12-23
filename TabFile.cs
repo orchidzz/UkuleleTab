@@ -10,13 +10,15 @@ namespace ukulele_tab
     /// </summary>
     internal class TabFile
     {
-        List<string>[] TabArray_ = new List<string>[4];
+        //store tab as matrix of char because can store each digit as a char
+        //and easier to maintain the evenness of each line when adding separators to remaining rows (for double digits fret)
+        List<char>[] TabArray_ = new List<char>[4];
         
         public TabFile()
         {
             for(int i = 0; i < 4; ++i)
             {
-                TabArray_[i] = new List<string> ();
+                TabArray_[i] = new List<char> ();
             }
         }
 
@@ -112,6 +114,7 @@ namespace ukulele_tab
         /// <param name="whole_col">bool of whether to delete a whole column of symbols; True if yes; False otherwise</param>
         /// <param name="idx">index of note to be deleted</param>
         /// <param name="str_pos">string position of note to be deleted</param>
+        /// Note: need improvement or to delete later on
         public void DeleteNote(bool whole_col, int idx, int str_pos = 0)
         {
             if(whole_col)
@@ -143,13 +146,22 @@ namespace ukulele_tab
         /// <param name="cur_idx"></param>
         public void AddNote(int str_pos, string fret_pos, int cur_idx = 0)
         {
+            //split the note into digits if needed before adding to tab
             if (cur_idx <= TabArray_[str_pos].Count())
             {
-                TabArray_[str_pos].Insert(cur_idx, fret_pos);
+                TabArray_[str_pos].Insert(cur_idx, fret_pos.ElementAt(0));
+                if (fret_pos.Length > 1)
+                {
+                    TabArray_[str_pos].Insert(cur_idx+1, fret_pos.ElementAt(1));
+                }
             }
             else
             {
-                TabArray_[str_pos].Add(fret_pos);
+                TabArray_[str_pos].Add(fret_pos.ElementAt(0));
+                if (fret_pos.Length > 1)
+                {
+                    TabArray_[str_pos].Add(fret_pos.ElementAt(1));
+                }
             }
             
         }
@@ -163,11 +175,11 @@ namespace ukulele_tab
         {
             if (cur_idx <= TabArray_[str_pos].Count())
             {
-                TabArray_[str_pos].Insert(cur_idx, "-");
+                TabArray_[str_pos].Insert(cur_idx, '-');
             }
             else
             {
-                TabArray_[str_pos].Add("-");
+                TabArray_[str_pos].Add('-');
             }
         }
 
@@ -188,14 +200,14 @@ namespace ukulele_tab
             {
                 while(TabArray_[i].Count() < longest_row)
                 {
-                    TabArray_[i].Add("-");
+                    TabArray_[i].Add('-');
                 }
             }
             
         }
    
         /// <returns>Tab to be displayed</returns>
-        public List<string>[] GetTab()
+        public List<char>[] GetTab()
         {
             return TabArray_;
         }
@@ -211,31 +223,12 @@ namespace ukulele_tab
             {
                 return;
             }
-            //parse the string version of the tab into an array of numbers and dashes
-            List<string> temp_tab = new List<string>();
-            string temp_str = "";
+            //parse the string version of the tab into an array of digits and dashes
+            List<char> temp_tab = new List<char>();
             
             for(int i=0; i<new_tab.Length; ++i)
             {
-                if(!new_tab[i].Equals('-'))
-                {
-                    temp_str += new_tab[i];
-                    //if the end of the string is not a dash
-                    if(i == new_tab.Length - 1)
-                    {
-                        temp_tab.Add(temp_str);
-                    }
-                }
-                else
-                {
-                    if (!temp_str.Equals(""))
-                    {
-                        temp_tab.Add(temp_str);
-                        temp_str = "";
-                    }
-                    temp_tab.Add("-");
-                }
-                
+                temp_tab.Add(new_tab[i]);
             }
 
             //change the tab array to the new tab 
